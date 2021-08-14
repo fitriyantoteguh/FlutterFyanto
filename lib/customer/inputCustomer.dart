@@ -14,6 +14,8 @@ class _InputcustomerState extends State<Inputcustomer> {
   TextEditingController _alamat = TextEditingController();
   TextEditingController _noTelp = TextEditingController();
 
+  final DatabaseReference _dataFirebase = FirebaseDatabase.instance.reference();
+
   List<String> dataList = [];
   String namaUsaha = "", noTelepon = "", alamat = "";
 
@@ -103,9 +105,15 @@ class _InputcustomerState extends State<Inputcustomer> {
       namaUsaha = _namaUsaha.text.toString();
       alamat = _alamat.text.toString();
       noTelepon = _noTelp.text.toString();
+
       _namaUsaha.clear();
       _alamat.clear();
       _noTelp.clear();
+
+      _dataFirebase
+          .child("customer")
+          .push()
+          .set({'nama': namaUsaha, 'alamat': alamat, 'notlp': noTelepon});
     });
   }
 // method end
