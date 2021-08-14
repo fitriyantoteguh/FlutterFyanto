@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "362520152075",
+    "firebase_url": "https://flutterfteamworld-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "flutterfteamworld",
+    "storage_bucket": "flutterfteamworld.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362520152075:android:323c7e1ef6854f38badf0e",
+        "android_client_info": {
+          "package_name": "com.example.fteam_world"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362520152075-gr3dp6e83onph4m2aag8lmtv1fr93iaf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfSp7SVA0pDZNYTf--EZvs4v1Q2zbRRXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362520152075-gr3dp6e83onph4m2aag8lmtv1fr93iaf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
