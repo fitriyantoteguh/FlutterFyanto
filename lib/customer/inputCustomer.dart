@@ -15,8 +15,8 @@ class _InputcustomerState extends State<Inputcustomer> {
   TextEditingController _noTelp = TextEditingController();
 
   final DatabaseReference _dataFirebase = FirebaseDatabase.instance.reference();
+  final _listData = <ListTile>[];
 
-  List<String> dataList = [];
   String namaUsaha = "", noTelepon = "", alamat = "";
 
   @override
@@ -38,7 +38,7 @@ class _InputcustomerState extends State<Inputcustomer> {
                     _buildAlamat(),
                     _buildnoTelpon(),
                     _buildButton(),
-                    _buildTextview(),
+                    _trial(),
                   ],
                 ))
           ],
@@ -87,15 +87,71 @@ class _InputcustomerState extends State<Inputcustomer> {
   }
 
   Widget _buildTextview() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [Text('$namaUsaha'), Text('$alamat'), Text('$noTelepon')],
+    return Center(
+      child: StreamBuilder(
+        stream: _dataFirebase.child('customer').onValue,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final daftarData = Map<String, dynamic>.from(
+                (snapshot.data! as Event).snapshot.value);
+            daftarData.forEach((key, value) {
+              final nextData = Map<String, dynamic>.from(value);
+              final dynamicData = ListTile(
+                leading: Icon(Icons.account_balance_wallet),
+                title: Text(nextData['nama']),
+                subtitle: Text(nextData['alamat']),
+              );
+              _listData.add(dynamicData);
+            });
+          }
+          return Container(
+            child: Column(
+              children: _listData,
+            ),
+          );
+        },
+      ),
     );
   }
 
-  // Widget _buildListView() {
-  //   return
-  // }
+  Widget _trial() {
+    return Padding(
+      padding: EdgeInsets.only(top: 1.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          SizedBox(
+            height: 10,
+          ),
+          StreamBuilder(
+            stream: _dataFirebase.child('customer').onValue,
+            builder: (context, snapshot) {
+              final _listData = <ListTile>[];
+
+              if (snapshot.hasData) {
+                final daftarData = Map<String, dynamic>.from(
+                    (snapshot.data! as Event).snapshot.value);
+                daftarData.forEach((key, value) {
+                  final nextData = Map<String, dynamic>.from(value);
+                  final dynamicData = ListTile(
+                    leading: Icon(Icons.account_balance_wallet),
+                    title: Text(nextData['nama']),
+                    subtitle: Text(nextData['alamat']),
+                  );
+                  _listData.add(dynamicData);
+                });
+              }
+              return Container(
+                child: Column(
+                  children: _listData,
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
 // form end
 
@@ -116,5 +172,6 @@ class _InputcustomerState extends State<Inputcustomer> {
           .set({'nama': namaUsaha, 'alamat': alamat, 'notlp': noTelepon});
     });
   }
+
 // method end
 }
